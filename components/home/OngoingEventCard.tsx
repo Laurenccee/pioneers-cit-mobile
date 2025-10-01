@@ -1,4 +1,9 @@
-import { MapPin, SquareArrowOutUpRight } from 'lucide-react-native';
+import { router } from 'expo-router';
+import {
+  MapPin,
+  SquareArrowOutDownLeft,
+  SquareArrowOutUpRight,
+} from 'lucide-react-native';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import Button from '../ui/button';
@@ -6,6 +11,7 @@ import Paragraph from '../ui/paragraph';
 import Title from '../ui/title';
 
 interface OngoingEventProps {
+  id?: string;
   label?: string;
   count?: number;
   outline?: boolean;
@@ -15,9 +21,11 @@ interface OngoingEventProps {
   description?: string;
   startTime?: string;
   endTime?: string;
+  date: string;
 }
 
 export default function OngoingEvent({
+  id,
   label,
   count,
   outline,
@@ -27,7 +35,23 @@ export default function OngoingEvent({
   description,
   startTime,
   endTime,
+  date,
 }: OngoingEventProps) {
+  const handleLogin = () => {
+    if (id) {
+      router.push(`/(protected)/scanner?eventId=${id}&action=login`);
+    } else {
+      console.warn('No event ID provided for scanner');
+    }
+  };
+
+  const handleLogout = () => {
+    if (id) {
+      router.push(`/(protected)/scanner?eventId=${id}&action=logout`);
+    } else {
+      console.warn('No event ID provided for scanner');
+    }
+  };
   return (
     <View
       style={{
@@ -66,9 +90,11 @@ export default function OngoingEvent({
 
           <View className="bg-white/10 rounded-xl px-3 py-3 items-center min-w-[60px] ml-4">
             <Paragraph className="text-white/60 text-xs font-delight-medium uppercase">
-              Oct
+              {new Date(date).toLocaleDateString('en-US', { month: 'short' })}
             </Paragraph>
-            <Title className="text-white text-xl font-delight-black">15</Title>
+            <Title className="text-white text-xl font-delight-black">
+              {new Date(date).getDate()}
+            </Title>
           </View>
         </View>
 
@@ -94,16 +120,19 @@ export default function OngoingEvent({
 
         {/* Action Buttons */}
         <View className="flex-row gap-3">
-          <Button className="flex-1 bg-white/15 border border-white/25">
-            <SquareArrowOutUpRight color="#FFFFFF" size={14} />
+          <Button className="flex-1 bg-white/15  " onPress={handleLogin}>
+            <SquareArrowOutDownLeft color="#FFFFFF" size={20} />
             <Paragraph className="text-white text-sm font-delight-bold">
-              CHECK IN
+              LOGIN
             </Paragraph>
           </Button>
-          <Button className="flex-1 bg-primary border border-primary/50">
-            <SquareArrowOutUpRight color="#FFFFFF" size={14} />
+          <Button
+            className="flex-1 bg-primary border border-primary/50"
+            onPress={handleLogout}
+          >
+            <SquareArrowOutUpRight color="#FFFFFF" size={20} />
             <Paragraph className="text-white text-sm font-delight-bold">
-              CHECK OUT
+              LOGOUT
             </Paragraph>
           </Button>
         </View>

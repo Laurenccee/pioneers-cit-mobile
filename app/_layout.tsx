@@ -1,6 +1,8 @@
 import { useFonts } from 'expo-font';
 import { Slot, SplashScreen, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Toaster } from 'sonner-native';
 import { AuthContextProvider, useAuth } from '../context/auth-context';
 import '../global.css';
 
@@ -42,8 +44,11 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <AuthContextProvider>
-      <MainLayout />
-    </AuthContextProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthContextProvider>
+        <MainLayout />
+        <Toaster />
+      </AuthContextProvider>
+    </GestureHandlerRootView>
   );
 }

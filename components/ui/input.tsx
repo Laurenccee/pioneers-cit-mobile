@@ -64,16 +64,28 @@ export default function Input({
 
   return (
     <View
-      className={`border-2 border-primary rounded-lg flex flex-row gap-2 items-center px-4 py-2 ${className}`}
+      className={`border-2 border-primary rounded-lg flex flex-row gap-2 items-center px-4 ${props.multiline ? 'py-2' : 'py-3 min-h-[50px]'} ${className}`}
     >
       {/* Left icon */}
-      {leftIconElement}
+      {leftIconElement && (
+        <View className={props.multiline ? 'self-start mt-2' : 'self-center'}>
+          {leftIconElement}
+        </View>
+      )}
 
       <TextInput
         secureTextEntry={isPassword && !showPassword}
         placeholder={placeholder}
-        className="text-md flex-1 font-sans"
+        className={`text-md flex-1 font-sans ${props.multiline ? 'py-2' : ''}`}
         placeholderTextColor="#8E1616"
+        style={[
+          props.multiline && {
+            textAlignVertical: 'top',
+            paddingTop: 8,
+            minHeight: 120,
+          },
+          props.style,
+        ]}
         {...props}
       />
 

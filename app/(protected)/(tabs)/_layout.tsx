@@ -1,10 +1,24 @@
 import AppBar from '@/components/layouts/appbar';
-import { Tabs } from 'expo-router';
+import { Tabs, useSegments } from 'expo-router';
 import { Calendar, Home, User } from 'lucide-react-native';
+import { useEffect, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
+  const segments = useSegments();
+  const [tabBarVisible, setTabBarVisible] = useState(true);
+
+  useEffect(() => {
+    // Hide tab bar when navigating to full-screen pages
+    const segmentString = segments.join('/');
+    const isFullScreenPage =
+      segmentString.includes('events/create') ||
+      segmentString.includes('events/attendance') ||
+      segmentString.includes('event-details');
+
+    setTabBarVisible(!isFullScreenPage);
+  }, [segments]);
 
   return (
     <Tabs
@@ -35,6 +49,7 @@ export default function TabLayout() {
           shadowOpacity: 0.1,
           shadowRadius: 12,
           elevation: 8,
+          display: tabBarVisible ? 'flex' : 'none',
         },
         tabBarItemStyle: {
           paddingVertical: 8,
@@ -42,19 +57,11 @@ export default function TabLayout() {
         headerShown: true,
         header: () => (
           <AppBar
-            title="PIONEERS"
-            variant="default"
-            showMenuButton={false}
-            showSearchButton={true}
+            title="SKIBIDII TESTING"
+            showSearchButton={false}
             showNotificationButton={true}
-            onMenuPress={() => {}}
-            onSearchPress={() => {}}
-            onNotificationPress={() => {}}
           />
         ),
-        headerStyle: {
-          borderRadius: 10,
-        },
       }}
     >
       <Tabs.Screen
@@ -67,16 +74,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="event"
+        name="events"
         options={{
-          title: 'Event',
+          title: 'Events',
           tabBarIcon: ({ color, size }) => (
             <Calendar size={size || 24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="setting"
+        name="settings"
         options={{
           title: 'Settings',
           tabBarIcon: ({ color, size }) => (

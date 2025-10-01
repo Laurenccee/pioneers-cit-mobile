@@ -12,6 +12,8 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts",
-    "context/auth-context.js"
+    "context/auth-context.js",
+    "lib/firebase.js",
+    "services/event.js"
   ]
 }

@@ -56,7 +56,7 @@ export default function AppBar({
     <SafeAreaView
       style={{ backgroundColor }}
       edges={['top']}
-      className="rounded-b-3xl overflow-hidden"
+      className=" overflow-hidden"
     >
       <View
         className="flex-row items-center justify-between px-6 py-4"
@@ -67,14 +67,14 @@ export default function AppBar({
           {/* Back Button */}
           {showBackButton && (
             <TouchableOpacity onPress={onBackPress} className="p-2 mr-2 -ml-2">
-              <ArrowLeft size={24} color="white" />
+              <ArrowLeft size={20} color="white" />
             </TouchableOpacity>
           )}
 
           {/* Menu Button */}
           {showMenuButton && !showBackButton && (
             <TouchableOpacity onPress={onMenuPress} className="p-2 mr-2 -ml-2">
-              <Menu size={24} color="white" />
+              <Menu size={20} color="white" />
             </TouchableOpacity>
           )}
 

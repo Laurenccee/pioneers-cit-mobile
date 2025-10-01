@@ -15,7 +15,7 @@ interface UpcomingEventProps {
   location?: string;
 }
 
-export default function UpcommingEvent({
+export default function UpcomingEvent({
   title,
   date,
   description,
